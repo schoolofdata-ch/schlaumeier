@@ -32,13 +32,13 @@ csvConverter.fromFile('./data/adressen.csv', function(err, jsonObj) {
         });
     });
     data.addresses = TAFFY(mapped);
-    console.log(data.addresses().get());
+//    console.log(data.addresses().get());
     console.log("Finished parsing adresses CSV");
 });
 
 data.wbev = null;
-var wbevConverter = new Converter({delimiter: ','});
-wbevConverter.fromFile('./data/bevbestandjahradminsherkunftreligion.csv', function(err, jsonObj) {
+var wbevConverter = new Converter({delimiter: ',', checkType: true});
+wbevConverter.fromFile('./data/bev316od3161.csv', function(err, jsonObj) {
     console.log("Error: ", err);
     var mapped = _.map(jsonObj, function(bev) {
         var lower =  _.mapKeys(bev, function(val, key) {
@@ -71,8 +71,34 @@ wbevConverter.fromFile('./data/bevbestandjahradminsherkunftreligion.csv', functi
         return lower;
     });
     data.wbev = TAFFY(mapped);
-    console.log(data.wbev().get());
+//    console.log(data.wbev().get());
     console.log("Finished parsing wbev CSV");
+});
+
+data.todesfalle = null;
+var todesConverter = new Converter({delimiter: ',', checkType: true});
+todesConverter.fromFile('./data/bev422od4220.csv', function(err, jsonObj) {
+    console.log("Error: ", err);
+    var mapped = _.map(jsonObj, function(bev) {
+        var lower =  _.mapKeys(bev, function(val, key) {
+            return key.toLowerCase();
+        });
+
+        lower['jahr'] = lower['stichtagdatjahr'];
+        lower['quarier_sort'] = lower['quarsort'];
+        lower['quarier_name'] = lower['quarlang'];
+        lower['anzahl'] = lower['anzsterwir'];
+
+        delete lower['stichtagdatjahr'];
+        delete lower['quarsort'];
+        delete lower['quarlang'];
+        delete lower['anzsterwir'];
+
+        return lower;
+    });
+    data.todesfalle = TAFFY(mapped);
+    console.log(data.todesfalle().get());
+    console.log("Finished parsing todesfalle CSV");
 });
 
 function matcher(text) {

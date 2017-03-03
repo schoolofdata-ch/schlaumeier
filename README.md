@@ -10,3 +10,5 @@ Er zeigt ortsbasierte Informationen an, u.a. mit den Daten von [Open Data Züric
 ## Installation
 
 To generate the charts, [node-canvas](https://github.com/Automattic/node-canvas) is needed. Check their README, for detailed instructions how to install it.
+
+Run the script in the `data` folder to fetch CSV files.
